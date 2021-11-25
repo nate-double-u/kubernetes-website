@@ -9,7 +9,7 @@ CONTAINER_ENGINE ?= docker
 IMAGE_REGISTRY ?= gcr.io/k8s-staging-sig-docs
 IMAGE_VERSION=$(shell scripts/hash-files.sh Dockerfile Makefile | cut -c 1-12)
 CONTAINER_IMAGE   = $(IMAGE_REGISTRY)/k8s-website-hugo:v$(HUGO_VERSION)-$(IMAGE_VERSION)
-CONTAINER_RUN     = $(CONTAINER_ENGINE) run --rm --interactive --tty --volume $(CURDIR):/src
+CONTAINER_RUN     = $(CONTAINER_ENGINE) run --rm --platform linux/amd64 --interactive --tty --volume $(CURDIR):/src
 
 CCRED=\033[0;31m
 CCEND=\033[0m
@@ -49,7 +49,7 @@ non-production-build: ## Build the non-production site, which adds noindex heade
 	hugo --enableGitInfo
 
 serve: module-check ## Boot the development server.
-	hugo server --buildFuture
+	npm run serve
 
 docker-image:
 	@echo -e "$(CCRED)**** The use of docker-image is deprecated. Use container-image instead. ****$(CCEND)"
