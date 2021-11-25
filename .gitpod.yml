@@ -1,0 +1,14 @@
+# Commands to start on workspace startup
+tasks:
+  - name: Dev Server
+    init: |
+      nvm install --lts
+      npm install -g hugo-extended
+      npm install
+      git submodule update --init --recursive --depth 1
+    command: make serve
+
+# Ports to expose on workspace startup
+ports:
+  - port: 1313
+    onOpen: open-browser
